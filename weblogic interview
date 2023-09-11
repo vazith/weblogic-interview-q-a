@@ -1,0 +1,239 @@
+
+WEBLOGIC INTERVIEW QUSTIONS
+1.What is a Domain?
+>An Oracle WebLogic Server Domain is a logically related group of Oracle WebLogic Server resources
+>A domain consists of one or more WebLogic Server instances (and their associated resources) that you manage with a single Administration Server
+>A domain is the basic administrative unit of WebLogic Server
+>A domain is an interrelated set of WebLogic Server resources managed as a unit
+
+2.What is an Admin Server?
+>The Administration Server provides a central point for managing a WebLogic Server domain Admin Server is a Singleton Service - ONLY One Per Domain
+
+3.What is a Managed Server?
+>Managed Server is an instance of your WebLogic server that is running on JVM and has its own configuration. In a Managed server, we deploy the java components i.e Web Applications, EJB Applications, JMS Applications and Web services
+
+4.What is the default port of Admin Server?
+>7001
+
+5.How may Admin server possible in a Domain? OR is that possible to Have more than one Admin server for a domain?
+>There will always be ONLY one Administration Server per/in a domain
+
+6.Can we deploy applications on Admin server?
+Yes, we can deploy but it's not recommended. Leave Administration server for configuration and maintenance.
+
+7.What is the difference between Admin Server and Managed Server?
+>An admin Server stores master configuration of the domain including Managed Servers configuration
+>Each Managed Server stores a local copy of the config For only first time Managed Server startup, Admin Server should be running
+>On subsequent Managed Server startup, it connects to Admin Server to synchronize configuration
+>If Admin Server is not available at start-up, Managed Server boots with its local copy
+
+8.What's the limit of Managed Servers in a domain? OR how many managed servers You can create in a domain?
+>No limit. There could be Zero to N Managed Server per domain
+
+9.What would be the impact on Domain or Applications in case Admin server goes down?
+>No impact on applications, ONLY you cannot change the server's configuration until the Administration Server is available
+
+10.What would be the impact on Domain or Applications in case managed server(s) goes down?
+>Depend on the number of managed servers. If only one is there then application(s) will not be accessible. In case multiple, no impact. Performance may degrade
+
+11.What is boot.properties file and what is the use of that?
+A boot identity file contains user credentials for starting and stopping an instance of WebLogic Server
+An Administration Server can refer to this file for user credentials instead of prompting you to provide them
+
+12.What is the location of boot.properties file?
+<domain_home>/servers/<server>/security
+
+13.Is it create automatically or need to create manually?
+In Production mode domain, you have to create it manually for Admin Server. In Development mode domain it creates automatically
+
+14.What is config.xml? OR How the configurations stored in the weblogic server?
+The config.xml file defines the majority of configuration settings for all WebLogic Servers in a management domain
+Each WebLogic Server domain contains a central configuration file called the config.xml, which is stored in the DOMAIN_HOME\config directory
+Both the Admin Server and the Managed Servers derive their run-time configuration information from the config.xml file
+In addition to the config .xml file, there are subsidiary configuration files
+DOMAIN_HOME\config\config.xml
+DOMAIN_HOME\config\jdbc (Contain all Data Sources xml files)
+
+15.What is Heap Size or Memory?
+The Java heap is where the objects of a Java program live. It is a repository for live objects, dead objects, and free memory
+The Java heap is the area of memory used to store objects by applications running on the JVM
+
+16.Is there any limit to define Heap Size or Memory?
+In 32 bit OS you can allocate up to 4 GB of memory per process
+No capping on 64 bit OS
+
+17.How and where we define the heap memory?
+The size is set in the setDomainEnv.sh file for Linux or setDomainEnv.cmd for Windows, which is in the $DOMAIN_HOME/bin directory
+The heap size is set with the -Xms and -Xmx options
+
+18.What is a cluster?
+A WebLogic Server cluster consists of multiple WebLogic Server server instances running simultaneously and working together to provide increased scalability and reliability
+
+19.What are the different types of cluster algorithms for Load Balancing?
+Load Balancing: Distributing the load proportionally among all the servers in the cluster
+Round-Robin
+Weight-Based
+Random
+
+20.What are the different modes of a Domain?
+You can configure a WebLogic domain to run in one of two modes:
+Development mode
+Production mode
+The domain mode determines default settings regarding security and logging
+
+21.What is the difference between Development and Production Mode?
+
+Development Mode                                                                                                                          Production Mode
+
+Enables auto-deployment of applications                                                                                                Does not support auto-deployment
+
+Creates a boot.properties file automatically at the server start up Alwكا                                                               Always prompt for Weblogic User Name and Password
+
+Default JDBC Connection pool capacity is 15 connections                                                                                The Default JDBC Connection pool capacity is 25 connections. For
+WebLogic 12c it defaults to 15 in both Dev and Prod mode
+(prior to 12c versions)
+
+The default number of threads available to Execute Queues is 15                                                                         The default number of threads available to Execute Queues is 25
+
+The Change center is disabled. Any Configuration change being done Cha doesn't need the Lock and Edit session.                          Change center is enabled. Any configuration change being done by the user needs to produce a Lock and Edit session.
+
+When the server is started, A new log will be created and the old Ser                                                                   Id Server rotates its log file after the size of the file reaches 500 kilobytes
+log will be automatically renamed as server-name.log.n.
+For the remainder of the server session, the server rotates its local log file whenever the size of the file reaches 500 kilobytes
+
+22.What is a Data Source?
+What is a Connection Pool?
+A data source is a Java EE standard method of configuring connectivity to a database
+Each WebLogic data source contains a pool of database connections
+Applications look up the data source on the JNDI tree then reserve a database connection
+
+23.What is a Node Manager?
+Node Manager is a WebLogic Server independent utility (runs as separate process
+from WebLogic Server) that enables you to start, shut down, and restart Administration Server and Managed Server instances from remote location
+
+24.Is it really necessary to configure Node Manager for a domain?
+No, it's an optional utility BUT if you want to start and stop servers from Admin console or want to enable automatic restart of servers during unexpected server failures and then you have to use it. Otherwise you can start stop server using scripts provide with weblogic servers.
+
+25.What's the impact in case Node Manager goes down?
+No impact on applications. It's an independent utility which is used to start, stop and recover serves form unexpected failure conditions (like automatic restart sever in FAILED state), So only such features will not be available.
+
+26.What's extension of log files created by Node Manager?
+It's created with out extension inside same server logs folder. For example, if your server name is my_server1, then it will create inside DOMAIN/servers/my_server1/logs
+
+27.What is Deployment?
+The term application deployment refers to the process of making an application or module available for processing client requests in a WebLogic Server domain
+
+28.What are different types of Deployment files?
+• Web Application (.war files)
+Enterprise JavaBean (.jar files)
+Enterprise Application (.ear files commination of war and .jar files)
+• Resource Adapter (.rar files) → like adaptors for legacy applications
+
+29.How do we create Deployment files?
+We can create deployment files using jar utility of java (Inside JAVA_HOME\bin) # To create
+cd MyWebsite; jar -cvf mywarfile.war.
+# To extract
+cd MyWebsite; jar -xvf mywarfile.war.
+
+30.What are the different Deployment Staging Modes?
+What's the difference between stage, no_stage and external_stage mode?
+Stage Mode
+Stage mode indicates that the Administration Server copies the deployment files from their original location to the staging directories of each targeted server
+For example, if you deploy a J2EE Application to three servers in a cluster, the Administration Server copies the deployment files to directories on each of the three server machines Each server then deploys the J2EE Application using its local copy of the archive files
+Stage mode is the default (and preferred) mode when deploying to more than one WebLogic Server instance.
+No_stage Mode
+Nostage mode indicates that the Administration Server does not copy the archive files from their source location. Instead, each targeted server must access the archive files from a single source directory for deployment.
+For example, if you deploy a J2EE Application to three servers in a cluster, each server must be able to access the same application archive files (from a shared or network-mounted directory) to deploy the application. In nostage mode, the web application container automatically detects changes to JSPs and servlets.
+External stage mode
+External_stage mode is similar to stage mode, in that the deployment files must reside locally to each targeted server. However, the Administration Server does not automatically copy the deployment files to targeted servers in external_stage mode; instead, you must ensure that the files are copied to the staging directory of each targeted server.
+External stage mode is the least common deployment staging mode. It is generally used only in environments that are managed by third-party tools that automate the required copying of files.
+
+31.How to delete cache in weblogic server?
+You have to delete "cache" and "tmp" folders from server staging directory
+Your_domain/servers/your_server/tmp
+Your_domain/servers/your_server/cache
+Your_domain/servers/your_server/cache
+Make sure to stop before deleting cache
+
+31.What is JNDI?
+JNDI: Java Naming and Directory Interface
+Lookup Service: Applications use naming services to locate objects in data sources, EJBs, JMS, Mail Sessions, and so on in the network.
+A naming service associates names with objects and finds objects based on their given names.
+
+32.Is that possible to have a cluster across multiple domains?
+No, it's not possible
+
+33.What is MSI Mode? Is that possible to start managed server if admin server is not available?
+MSI is Managed Server Independence Mode.
+Managed Servers maintain a local copy of the domain configuration.
+When a Managed Server starts, it contacts its Administration Server to retrieve any changes to the domain configuration that were made since the Managed
+Server was last shut down
+If a Managed Server cannot connect to the Administration Server during startup, it can use its locally cached configuration information-this is the configuration that was current at the time of the Managed Server's most recent shutdown.
+A Managed Server that starts up without contacting its Administration Server to check for configuration updates is running in Managed Server Independence (MSI) mode. By default, MSI mode is enabled
+
+34.What are the different ways to start server? (Admin/Managed Servers)
+Admin Server:
+Using default script (startWeblogic.sh/cmd)
+Using WLST with the help of Node Manger
+Managed Server:
+Using default script (startManaged Weblogic.sh/cmd) startManaged Weblogic.sh <MS_NAME> http://<Admin_Host>:<Admin_Port>
+Using WLST by connecting Admin Server
+From Admin Console
+
+36.What is the difference between .log and .out log files?
+.log files are created by admin server for each managed server and out file is created by Node Manager
+
+37.Is that possible to start managed server without Node Manager? Is it mandatory to have Node Manager to start Managed Server?
+You can start Managed Server(s) without Node Manager using:
+Using default script (startManagedWeblogic.sh/cmd) startManagedWeblogic.sh <MS_NAME> http://<Admin_Host>:<Admin_Port>
+Using WLST by connecting Admin Server
+BUT if want to use Admin Console to start/stop managed server(s) then you have to configure Node Manager
+
+38.Is that possible to recover admin user and password if lost?
+Yes.
+https://www.youtube.com/watch?v=lkkfvpCZ_yw
+
+39.What could be the potential causes of server hang?
+Heap Memory Issue
+Garbage Collection taking much time
+Capacity Issue
+Network Issue
+Integrated Applications Issue
+Application Code Issue (Deadlock)
+
+40.What are the supported installation modes available for WebLogic?
+WebLogic installation can happen via 3 different modes:
+Console mode
+Graphical mode
+Silent mode
+
+41.What is the difference between Horizontal and Vertical Clustering?
+Horizontal clustering involves running multiple Java application servers             Vertical clustering consists of multiple Java application servers on a single physical machine
+that are run on two or more separate physical machines
+
+42.What are the benefits of Horizontal Clustering?
+Scalability
+High-Availability
+Load Balancing
+Failover
+
+43.What Types of Objects Can Be Clustered?
+Servlets
+JSPs
+EJBs
+Remote Method Invocation (RMI) objects
+Java Messaging Service (JMS) destinations
+Java Database Connectivity (JDBC) connections
+
+44.How do stubs work in a WebLogic Server cluster?
+Clients that connect to a WebLogic Server cluster and look up a clustered object obtain a replica-aware stub for the object
+This stub contains the list of available server instances that host implementations of the object
+The stub also contains the load balancing logic for distributing the load among its host servers
+When the failure occurs, the stub removes the failed server instance from its list. The stub periodically refreshes its list of available server instances in the cluster
+
+45.What is the difference between t3 and http? What is t3 in weblogic?
+https://youtu.be/MXn3niRxkUU
+Weblogic Server Performance Tuning - Load Balancing of Http & RMI-PART 5
+RMI communications in WebLogic Server use the T3 protocol to transport data between WebLogic Server and other Java programs, including clients and other WebLogic Server instances. A server instance keeps track of each Java Virtual Machine (JVM) with which it connects, and creates a single T3 connection to carry all traffic for a JVM
+For example, if a Java client accesses an enterprise bean and a JDBC connection pool on WebLogic Server, a single network connection is established between the WebLogic Server JVM and the client JVM.
+Http protocols are used primarily for HTTP communication between the browser and the webserver (App Server also has capability of Web Server)
