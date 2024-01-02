@@ -1,0 +1,200 @@
+-----------weblogic_install----------------
+
+FIRST
+  BY ROOT :
+
+( ADD SYSTEM IP AND HOSTNAME )
+
+      HOSTNAMECTL SET-HOSTNAME VAZITH.EIDIKOINTERNAL.COM
+                    (OR)
+                VI /ETC/HOSTNAME 
+                      |
+                      V                  
+                  VI /ETC/HOSTS
+                       |
+                       v
+              VI /ETC/SYSCONFIG/NETWORK 
+                        |
+                        v
+                   useradd oracle
+                        |
+                        V
+                  PASSWD ORACELE
+      
+
+GET FILES ( jdk-8u371-linux-x64.tar.gz,fmw_12.2.1.2.0_wls_Disk1_1of1.zip)
+FOR REMOVEING CONFUSION CREATED DIRECTORIES JDK & WEBLOGIC SEND THAT FILES
+TO REVALANT DIRECTORY 
+                     CD JDK
+                        |  
+                        v
+                TAR -XZVF jdk-8u371-linux-x64.tar.gz
+            ( AFTER UNZIP WE GET A DIRECTORY jdk1.8.0_371)
+                        |
+                        V
+                      CD ..
+                        |
+                        V                       
+                    VI .BASH_PROFILE
+           ( IN BASH_PROFILE RUN THIS CMD 
+                  export JAVA_HOME=/home/oracle/JDK/jdk1.8.0_371
+                  export PATH=$JAVA_HOME/bin:$PATH )
+                        |
+                        v
+                  . .bash_profile
+                       |
+                       V
+               CHECK THE VERSION THE BASH PROFILE UPDATED OR NOT
+                CMD : ./JAVA -VERSION 
+             JDK :OLD VERSION (101)  JDK:NEW VERSION(301)
+                        |
+                        V
+                    CD WEBLOGIC
+                        |
+                        V
+                   UNZIP IT 
+                  unzip fmw_12.2.1.2.0_wls_Disk1_1of1.zip
+             (AFTER UNZIP WE GET GREEN COLOUR fmw_12.2.1.2.0_wls.jar)
+                        |
+                        V
+            JAVA -JAR fmw_12.2.1.2.0_wls.jar
+                        |
+                        V
+      
+   --------------------(GUI OPENS )--------------------
+
+        gui name : Installation inventory setup 
+        invertory directory :/home/oracle/oraInventory
+        inventory group     : oracle
+                          |
+                          v
+                     click on OK 
+                           |
+                           V
+   ----------------ANOTHEIR GUI (OPENS)------------------- 
+  GUI NAME :ORACLE FUSION MIDDLEWARE 12C WEBLOGIC SERVER AND COHERENCE INSTALLATIOMN 
+
+                        1. WEBLOGIC
+                             (NEXT)
+                            |
+                            V
+                        2. AUTO UPDATES 
+                        (SKIP AUTO UPDATES)
+                             (NEXT)
+                             |
+                             V 
+                        3.INSTALLATION LOCATION  
+                          /home/oracle/Oracle/Middleware/Oracle_Home
+                               (NEXT)
+                              | 
+                              V
+                        4. INSTALLATION TYPE 
+                          1. WEBLOGIC SERVER
+                          2. COHERENCE 
+                          3. COMPLETE WITH EXAMPPLE
+                         (WE SELECET wEBLOGIC SERVER)
+                                  (NEXT)
+                                  |
+                                  V
+                        5.PREREQUEST CHEKS 
+                                 (NEXT)
+                                  |
+                                  V
+                        6. SECURITY UPDATE.
+                             (ADD MAIL)
+                                 (NEXT)
+                                  |
+                                  V
+                        7. iNSTALLATION SUMMARY    
+                                 (NEXT)
+                                   |
+                                   V
+                        8. INSTALLATION PROGRESS
+                                    |
+                                    V
+                         9. INSTALLATION COMPLETE 
+                                    |
+                                    V                                
+-----------------------------DOMAIN ( GUI OPENS )-------------
+                                    |
+                                    V
+                          1. CREATE DOMAIN
+                      SELECT ( CREATE A NEW DOMAIN )
+                                   |
+                                   V
+                          2. TEMPLATES
+                                   |
+                                   V
+                          3. ADMINSTARATION ACCOUNT 
+                      (ENTER 
+                            USERNAME : WEBLOGIC 
+                          PASSWORD   : SARASU10
+                  CONFORM PASSWORD   : SARASU10 )
+                                     |
+                                     V
+                         4. DOMAIN MODE AND JDK 
+                        DOMAIN MODE :
+                             DEVOLPMENT 
+                              PRODUCTION 
+                      ( SELECT DEVOLOPMENT MODE )
+                                     |
+                                     V
+                          5. ADVANCED CONFIGURATAIOM
+                          ( 1. ADMINSTARTION SERVER
+                            2. NODE MANAGER 
+                            3. TOPOLOGY )
+                                      |
+                                      V
+                          6. ADMINSTARATION SERVER
+                         SERVERNAME : AdminServer
+                      ICENSE ADRESS : LOCAL HOST
+                               PORT : 7007
+                                    |
+                                    V
+                          7. CONFIGURATION SUMMARY 
+                        CLICK ON ( CREATE ) BELOW SHOWS
+                                    |
+                                    V
+                         8. CONFIGURATION  PROGRESSION 
+                                    | 
+                                    V
+                         9.END OF CONFIGURATION 
+                           CLICK ON ( FINISH )
+---------------------------------------------------------------------------------------
+
+FOR MANUAL PROFILE CREATION 
+GO TO THIS PATH 
+            ( /home/oracle/Oracle/Middleware/Oracle_Home/oracle_common/common/bin )
+RUN THIS COMMAND ./config.sh
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
