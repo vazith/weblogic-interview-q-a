@@ -129,7 +129,7 @@ TO REVALANT DIRECTORY
                       (ENTER 
                             USERNAME : WEBLOGIC 
                           PASSWORD   : SARASU10
-                  CONFORM PASSWORD   : SARASU10 )
+                  CONFIRM PASSWORD   : SARASU10 )
                                      |
                                      V
                          4. DOMAIN MODE AND JDK 
@@ -147,8 +147,8 @@ TO REVALANT DIRECTORY
                                       V
                           6. ADMINSTARATION SERVER
                          SERVERNAME : AdminServer
-                      ICENSE ADRESS : LOCAL HOST
-                               PORT : 7007
+                      LICENSE ADRESS : LOCAL HOST
+                               PORT : 7001
                                     |
                                     V
                           7. CONFIGURATION SUMMARY 
